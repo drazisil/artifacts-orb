@@ -7,5 +7,6 @@ usage:
     artifacts: drazisil/artifacts@dev:alpha
   jobs:
     build:
+      machine: true
       steps:
         - artifacts/prepare-artifacts-dir
