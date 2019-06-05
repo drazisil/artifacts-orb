@@ -7,7 +7,7 @@ orbs:
   artifacts: drazisil/artifacts@dev:alpha
   orb-tools: circleci/orb-tools@8.5.0
 
-workflows:
+jobs:
   integration-tests:
     executor:
       name: node/node
@@ -19,7 +19,7 @@ workflows:
           name: Create dummy artifact
           command: echo "test" >> $ARTIFACTS_PATH/dummy.txt
       - artifacts/upload-artifacts-group
-
+workflows:
   # this `lint-pack_validate_publish-dev` workflow will run on any commit
   lint-pack_validate_publish-dev:
     jobs:
