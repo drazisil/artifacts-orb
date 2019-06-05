@@ -1,38 +1,42 @@
-version: 2.1
-description: Artifacts upload manager
-
 commands:
   prepare-artifacts-dir:
-    description: 'Prepare and set artifacts directory path'
+    description: Prepare and set artifacts directory path
     parameters:
       artifacts-path:
+        default: ~/artifacts
         description: The path to store artifacts
         type: string
-        default: '~/artifacts'
     steps:
-      - run:
-          name: 'Create artifacts path'
-          command: |
-            mkdir -p << parameters.artifacts-path >>
-            echo "export ARTIFACTS_PATH=<< parameters.artifacts-path >>" >> $BASH_ENV
-      - run:
-          name: 'Echo artifacts path'
-          command: |
-            echo $ARTIFACTS_PATH
+    - run:
+        command: |
+          mkdir -p << parameters.artifacts-path >>
+          echo "export ARTIFACTS_PATH=<< parameters.artifacts-path >>" >> $BASH_ENV
+        name: Create artifacts path
+    - run:
+        command: |
+          echo $ARTIFACTS_PATH
+        name: Echo artifacts path
   upload-artifacts-group:
-    description: 'Upload several artifacts at once.'
+    description: Upload several artifacts at once.
     parameters:
       artifacts-group:
-        default: '$ARTIFACTS_PATH'
+        default: $ARTIFACTS_PATH
         type: string
     steps:
-      - run:
-          name: 'Prepare artifacts group for upload'
-          command: |
-            mkdir -p ~/artifacts
-            if [ << parameters.artifacts-group >> != ~/artifacts ]; then cp -r << parameters.artifacts-group >> ~/artifacts; fi
-          when: always
-      - store_artifacts:
-          name: 'Upload artifacts group'
-          path: ~/artifacts
-          when: always
+    - run:
+        command: |
+          mkdir -p ~/artifacts
+          if [ << parameters.artifacts-group >> != ~/artifacts ]; then cp -r << parameters.artifacts-group >> ~/artifacts; fi
+        name: Prepare artifacts group for upload
+        when: always
+    - store_artifacts:
+        name: Upload artifacts group
+        path: ~/artifacts
+        when: always
+description: Artifacts upload manager
+examples: {}
+executors: {}
+jobs: {}
+orbs: null
+version: 2.1
+
