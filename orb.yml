@@ -1,19 +1,5 @@
 version: 2.1
-orbs:
-  node: circleci/node@1.0.0
-  codecov: codecov/codecov@1.0.4
-jobs:
-  build:
-    executor:
-      name: node/node
-      tag: '10.16.0'
-    steps:
-      - checkout
-      - prepare-artifacts-dir
-      - run:
-          name: Create dummy artifact
-          command: echo "test" >> $ARTIFACTS_PATH/dummy.txt
-      - upload-artifacts-group
+description: Artifacts upload manager
 
 commands:
   prepare-artifacts-dir:
@@ -50,9 +36,3 @@ commands:
           name: 'Upload artifacts group'
           path: ~/artifacts
           when: always
-
-workflows:
-  version: 2.1
-  build-test:
-    jobs:
-      - build
