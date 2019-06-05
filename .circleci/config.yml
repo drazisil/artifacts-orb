@@ -4,6 +4,7 @@ version: 2.1
 # release must exist; you'll need to publish manually at least once)
 # you can use scripts/publish-alpha.sh to publish a @dev:alpha release
 orbs:
+  node: circleci/node@1.0.0
   artifacts: drazisil/artifacts@dev:alpha
   orb-tools: circleci/orb-tools@8.5.0
 
