@@ -7,7 +7,7 @@ orbs:
   artifacts: drazisil/artifacts@dev:alpha
   orb-tools: circleci/orb-tools@8.5.0
 
-workflows:
+jobs:
   integration-tests:
     executor:
       name: node/node
@@ -20,6 +20,7 @@ workflows:
           command: echo "test" >> $ARTIFACTS_PATH/dummy.txt
       - artifacts/upload-artifacts-group
 
+workflows:
   # this `lint-pack_validate_publish-dev` workflow will run on any commit
   lint-pack_validate_publish-dev:
     jobs:
@@ -38,7 +39,7 @@ workflows:
       # store CIRCLE_TOKEN as a project env var or Contexts resource
       # if using Contexts, add your context below
       - orb-tools/publish-dev:
-          orb-name: # namespace/orb-name, e.g., circleci/orb-starter-kit
+          orb-name: drazisil/artifacts
           requires:
             - orb-tools/pack
 
@@ -48,7 +49,7 @@ workflows:
       # key in CircleCI via SSH Permissions, with github.com as Hostname)
       - orb-tools/trigger-integration-workflow:
           name: trigger-integration-dev
-          ssh-fingerprints: # your SSH key fingerprint
+          ssh-fingerprints: f9:cc:e7:3a:e5:08:e6:86:95:77:0f:5c:06:62:08:d2
           requires:
             - orb-tools/publish-dev
           filters:
@@ -59,7 +60,7 @@ workflows:
       # the 2nd job (below) may also publish a production orb version
       - orb-tools/trigger-integration-workflow:
           name: trigger-integration-master
-          ssh-fingerprints: # your SSH key fingerprint
+          ssh-fingerprints: f9:cc:e7:3a:e5:08:e6:86:95:77:0f:5c:06:62:08:d2
           tag: master
           requires:
             - orb-tools/publish-dev
