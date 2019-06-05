@@ -1,0 +1,11 @@
+examples:
+  simple_usage:
+    description: Use the default path
+    usage:
+      version: 2.1
+      orbs:
+        artifacts: drazisil/artifacts@dev:alpha
+      jobs:
+        build:
+          steps:
+            - artifacts/prepare-artifacts-dir
