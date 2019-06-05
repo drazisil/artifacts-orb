@@ -1,0 +1,16 @@
+description: 'Upload several artifacts at once.'
+parameters:
+  artifacts-group:
+    default: '$ARTIFACTS_PATH'
+    type: string
+steps:
+  - run:
+      name: 'Prepare artifacts group for upload'
+      command: |
+        mkdir -p ~/artifacts
+        if [ << parameters.artifacts-group >> != ~/artifacts ]; then cp -r << parameters.artifacts-group >> ~/artifacts; fi
+      when: always
+  - store_artifacts:
+      name: 'Upload artifacts group'
+      path: ~/artifacts
+      when: always
